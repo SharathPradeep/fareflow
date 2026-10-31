@@ -1,0 +1,286 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "p_months": {
+              "value": "@split(pipeline().parameters.p_months, ',')",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "c16df508-a69d-897e-4e32-21b5c6563e36",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "0a528bad-35a3-4eae-9e23-25e2e7372439"
+        },
+        "policy": {
+          "timeout": "0.00:30:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "run_ingest",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "7deaa108-09a5-bdb8-4086-cfe8b7f5afc7",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "p_months": {
+              "value": {
+                "value": "@pipeline().parameters.p_months",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.00:30:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "run_bronze",
+        "dependsOn": [
+          {
+            "activity": "run_ingest",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "72ebc5ea-ca95-8a24-46c2-f608da0bc443",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "p_months": {
+              "value": {
+                "value": "@pipeline().parameters.p_months",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.00:30:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "run_silver",
+        "dependsOn": [
+          {
+            "activity": "run_bronze",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "dae288d8-0e52-8df2-4b90-e23bb39739cc",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "p_inject_bad_row": {
+              "value": false,
+              "type": "bool"
+            },
+            "p_fail_on_error": {
+              "value": true,
+              "type": "bool"
+            },
+            "_inlineInstallationEnabled": {
+              "value": true,
+              "type": "bool"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.00:30:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "run_dq_gx",
+        "dependsOn": [
+          {
+            "activity": "run_silver",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "EXEC dbo.usp_load_dims;\nEXEC dbo.usp_load_gold;\nEXEC dbo.usp_snapshot_ops;",
+                "type": "Expression"
+              },
+              "type": "NonQuery"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "00:30:00"
+        },
+        "linkedService": {
+          "name": "wh_gold",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "5bf7384d-e433-b2d4-4785-4831b418e825",
+              "endpoint": "axmrxxu53mauhjobgwfoiffrl4-zlsnwe2ea7furlifb5tsxplx7u.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "00000000-0000-0000-0000-000000000000"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.00:30:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "run_gold",
+        "dependsOn": [
+          {
+            "activity": "run_dq_gx",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "INSERT INTO dbo.ops_pipeline_runs VALUES ('@{pipeline().RunId}', '@{pipeline().Pipeline}', 'SUCCEEDED', SYSDATETIME());",
+                "type": "Expression"
+              },
+              "type": "NonQuery"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "wh_gold",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "5bf7384d-e433-b2d4-4785-4831b418e825",
+              "endpoint": "axmrxxu53mauhjobgwfoiffrl4-zlsnwe2ea7furlifb5tsxplx7u.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "00000000-0000-0000-0000-000000000000"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.00:30:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "log_success",
+        "dependsOn": [
+          {
+            "activity": "run_gold",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "INSERT INTO dbo.ops_pipeline_runs VALUES ('@{pipeline().RunId}', '@{pipeline().Pipeline}', 'FAILED', SYSDATETIME());",
+                "type": "Expression"
+              },
+              "type": "NonQuery"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "wh_gold",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "5bf7384d-e433-b2d4-4785-4831b418e825",
+              "endpoint": "axmrxxu53mauhjobgwfoiffrl4-zlsnwe2ea7furlifb5tsxplx7u.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "00000000-0000-0000-0000-000000000000"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.00:30:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 60,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "log_failure",
+        "dependsOn": [
+          {
+            "activity": "run_gold",
+            "dependencyConditions": [
+              "Failed",
+              "Skipped"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Fail",
+        "typeProperties": {
+          "message": "FareFlow run failed. See ops_pipeline_runs and the activity output",
+          "errorCode": "0"
+        },
+        "name": "fail_run",
+        "dependsOn": [
+          {
+            "activity": "log_failure",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "p_months": {
+        "type": "string",
+        "defaultValue": "2024-10,2024-11,2024-12,2025-01,2025-02,2025-03"
+      }
+    }
+  }
+}

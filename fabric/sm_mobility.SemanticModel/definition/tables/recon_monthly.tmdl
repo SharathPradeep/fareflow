@@ -1,0 +1,139 @@
+table recon_monthly
+	lineageTag: a96dbae7-50ee-4750-81d8-1559f3f985d5
+	sourceLineageTag: [dbo].[recon_monthly]
+
+	column year_month
+		dataType: string
+		lineageTag: 303f3464-9e6b-45e5-b6d6-25ec77d591aa
+		sourceLineageTag: year_month
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column file_rows
+		dataType: int64
+		formatString: 0
+		lineageTag: 735428cd-ca45-4712-81aa-3b26a0afd2c0
+		sourceLineageTag: file_rows
+		summarizeBy: sum
+		sourceColumn: file_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	column bronze_rows
+		dataType: int64
+		formatString: 0
+		lineageTag: 198f8e49-d913-4840-8de2-93a9503715bc
+		sourceLineageTag: bronze_rows
+		summarizeBy: sum
+		sourceColumn: bronze_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	column duplicates_removed
+		dataType: int64
+		formatString: 0
+		lineageTag: de1e7d65-75ac-4972-81db-33ffa8702355
+		sourceLineageTag: duplicates_removed
+		summarizeBy: sum
+		sourceColumn: duplicates_removed
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarantine_rows
+		dataType: int64
+		formatString: 0
+		lineageTag: 7192cf19-0e1c-4fac-9d20-b52d14956795
+		sourceLineageTag: quarantine_rows
+		summarizeBy: sum
+		sourceColumn: quarantine_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	column silver_rows
+		dataType: int64
+		formatString: 0
+		lineageTag: bb0c7081-8203-4b08-8936-188bbe9a1498
+		sourceLineageTag: silver_rows
+		summarizeBy: sum
+		sourceColumn: silver_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	column gold_rows
+		dataType: int64
+		formatString: 0
+		lineageTag: 20baf031-bd5b-432c-915f-981fa6b49d79
+		sourceLineageTag: gold_rows
+		summarizeBy: sum
+		sourceColumn: gold_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	column silver_total
+		dataType: double
+		lineageTag: a869cb68-5bfc-4cc8-a33d-2a55fd7c53ed
+		sourceLineageTag: silver_total
+		summarizeBy: sum
+		sourceColumn: silver_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gold_total
+		dataType: double
+		lineageTag: 7a585b21-fbd4-4a79-b799-30dac8ec5a25
+		sourceLineageTag: gold_total
+		summarizeBy: sum
+		sourceColumn: gold_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column load_check
+		dataType: string
+		lineageTag: 60eea178-5e1c-4d2d-a2b3-e364bdbb3f3c
+		sourceLineageTag: load_check
+		summarizeBy: none
+		sourceColumn: load_check
+
+		annotation SummarizationSetBy = Automatic
+
+	column transform_check
+		dataType: string
+		lineageTag: 04fe3f7f-6090-4898-ac07-1f6f29c13e11
+		sourceLineageTag: transform_check
+		summarizeBy: none
+		sourceColumn: transform_check
+
+		annotation SummarizationSetBy = Automatic
+
+	column publish_check
+		dataType: string
+		lineageTag: e8fa09b6-3743-4a40-af01-19ef84062ac8
+		sourceLineageTag: publish_check
+		summarizeBy: none
+		sourceColumn: publish_check
+
+		annotation SummarizationSetBy = Automatic
+
+	column checked_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: afcc6245-ebc6-4cc8-83b6-1acfc27bcfae
+		sourceLineageTag: checked_at
+		summarizeBy: none
+		sourceColumn: checked_at
+
+		annotation SummarizationSetBy = Automatic
+
+	partition recon_monthly = entity
+		mode: directLake
+		source
+			entityName: recon_monthly
+			schemaName: dbo
+			expressionSource: 'DirectLake - wh_gold'
+

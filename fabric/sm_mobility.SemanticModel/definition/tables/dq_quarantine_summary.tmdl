@@ -1,0 +1,39 @@
+table dq_quarantine_summary
+	lineageTag: 7b0ec251-0281-4457-ad98-04414984d937
+	sourceLineageTag: [dbo].[dq_quarantine_summary]
+
+	column year_month
+		dataType: string
+		lineageTag: 6e2e08a8-71b6-435f-88fd-e945392f3027
+		sourceLineageTag: year_month
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column dq_reason
+		dataType: string
+		lineageTag: 5d32724a-9a2f-429f-a65c-f8bd58ab26d9
+		sourceLineageTag: dq_reason
+		summarizeBy: none
+		sourceColumn: dq_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column rows_quarantined
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d40176c-4735-46e1-8f3f-1ccd504edf12
+		sourceLineageTag: rows_quarantined
+		summarizeBy: sum
+		sourceColumn: rows_quarantined
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dq_quarantine_summary = entity
+		mode: directLake
+		source
+			entityName: dq_quarantine_summary
+			schemaName: dbo
+			expressionSource: 'DirectLake - wh_gold'
+

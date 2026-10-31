@@ -1,0 +1,7 @@
+role 'Manhattan Analyst'
+	modelPermission: read
+
+	tablePermission dim_zone = [borough] == """Manhattan"""
+
+	annotation PBI_Id = 40f58335eeae43de982e7a569c36fe44
+

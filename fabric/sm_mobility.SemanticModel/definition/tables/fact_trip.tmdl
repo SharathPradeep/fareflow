@@ -1,0 +1,334 @@
+table fact_trip
+	lineageTag: 4935ab32-8a36-43ad-ba58-d0f0e26be860
+	sourceLineageTag: [dbo].[fact_trip]
+
+	measure Trips = COUNTROWS(fact_trip)
+		formatString: 0
+		lineageTag: 6209fbdd-bdc5-43ba-b6b8-25d67509b2df
+
+		changedProperty = Name
+
+	/// Total charged to passengers, excluding cash tips
+	measure Revenue = SUM(fact_trip[total_amount])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: f9470206-0a7b-4178-b47d-30c797af48df
+
+		changedProperty = Name
+
+		changedProperty = Description
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Avg Fare' = AVERAGE(fact_trip[fare_amount])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: e83f0973-aca3-4d09-9e78-160e0bbc105e
+
+		changedProperty = Name
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Tip %' = DIVIDE(SUM(fact_trip[tip_amount]), SUM(fact_trip[fare_amount]))
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f6007a2f-57b2-4db4-8e77-fa70f85f6c50
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'Revenue per Mile' = DIVIDE([Revenue], SUM(fact_trip[trip_distance_mi]))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: e59cd5f3-0913-4649-9e22-136908ccf73a
+
+		changedProperty = Name
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'CBD Fees' = SUM(fact_trip[cbd_congestion_fee])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 4f9675e4-a6ef-4473-9bb5-68cfa3ab077c
+
+		changedProperty = Name
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Dropoff Trips' = CALCULATE([Trips], USERELATIONSHIP(fact_trip[dropoff_zone_key], dim_zone[zone_key]))
+		formatString: 0
+		lineageTag: 140ba294-db62-4bbd-b260-8da658de99db
+
+		changedProperty = Name
+
+	measure 'Revenue MoM %' =
+			
+			VAR Curr = [Revenue]
+			VAR Prev = CALCULATE([Revenue], DATEADD(dim_date[date], -1, MONTH))
+			RETURN DIVIDE(Curr - Prev, Prev)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5d03ec74-6b49-4edf-8263-1b3929eab147
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	column trip_key
+		dataType: string
+		isHidden
+		lineageTag: 8a5ab7c2-0192-4708-ae00-de25a00ac302
+		sourceLineageTag: trip_key
+		summarizeBy: none
+		sourceColumn: trip_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month
+		dataType: string
+		lineageTag: 34ed5d1b-db88-4e18-801d-a4e9d78c581d
+		sourceLineageTag: year_month
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 31fe22ff-c470-423b-835f-9e9ca5462914
+		sourceLineageTag: date_key
+		summarizeBy: none
+		sourceColumn: date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pickup_zone_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: eb9a8e9f-7bf8-4131-8ece-28e222e49f46
+		sourceLineageTag: pickup_zone_key
+		summarizeBy: none
+		sourceColumn: pickup_zone_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dropoff_zone_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9ba99096-2dbb-442b-9d9c-7f9e540a0c04
+		sourceLineageTag: dropoff_zone_key
+		summarizeBy: sum
+		sourceColumn: dropoff_zone_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_type_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a10a95d1-1911-45a4-ba3b-ec5bbd2948e0
+		sourceLineageTag: payment_type_key
+		summarizeBy: none
+		sourceColumn: payment_type_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column rate_code_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a937543e-0118-4772-a81c-3296c9e0fe91
+		sourceLineageTag: rate_code_key
+		summarizeBy: none
+		sourceColumn: rate_code_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendor_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 93e46ee2-fade-4c26-b262-dadc664109c7
+		sourceLineageTag: vendor_key
+		summarizeBy: none
+		sourceColumn: vendor_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column trip_type_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 176b6b24-a9e9-43c6-bd1f-1a7272228bd0
+		sourceLineageTag: trip_type_id
+		summarizeBy: sum
+		sourceColumn: trip_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column pickup_ts
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0a645e4c-b3fd-4ab3-b4e9-4ea55906b537
+		sourceLineageTag: pickup_ts
+		summarizeBy: none
+		sourceColumn: pickup_ts
+
+		annotation SummarizationSetBy = Automatic
+
+	column passenger_count
+		dataType: int64
+		formatString: 0
+		lineageTag: b610d2e5-6530-4288-8745-16b4c2079af2
+		sourceLineageTag: passenger_count
+		summarizeBy: sum
+		sourceColumn: passenger_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column trip_distance_mi
+		dataType: double
+		lineageTag: a11d8d7e-15f9-44a3-a5b8-d8cfb2051ccd
+		sourceLineageTag: trip_distance_mi
+		summarizeBy: sum
+		sourceColumn: trip_distance_mi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column duration_min
+		dataType: double
+		lineageTag: 081e65c4-6400-458a-9814-be3b3fdab040
+		sourceLineageTag: duration_min
+		summarizeBy: sum
+		sourceColumn: duration_min
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fare_amount
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 05a3c984-1a27-456d-bc7c-0ad11ee23e12
+		sourceLineageTag: fare_amount
+		summarizeBy: sum
+		sourceColumn: fare_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column extra
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: d7e9fa3e-fd35-4de9-9dc5-5f2dea1e5ede
+		sourceLineageTag: extra
+		summarizeBy: sum
+		sourceColumn: extra
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column mta_tax
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 4baf950b-7fb4-417a-9ded-741528ae95cf
+		sourceLineageTag: mta_tax
+		summarizeBy: sum
+		sourceColumn: mta_tax
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column tip_amount
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 150d3325-bcd4-46c5-b3b6-0dde2d8b1972
+		sourceLineageTag: tip_amount
+		summarizeBy: sum
+		sourceColumn: tip_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column tolls_amount
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 68729e77-6a03-4a8f-aac4-db2eb01850c0
+		sourceLineageTag: tolls_amount
+		summarizeBy: sum
+		sourceColumn: tolls_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column improvement_surcharge
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 75f8ec4a-19ab-426d-bc97-c2a8efeb009a
+		sourceLineageTag: improvement_surcharge
+		summarizeBy: sum
+		sourceColumn: improvement_surcharge
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column congestion_surcharge
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: fba7f068-99e0-4d7f-addc-565286d3d116
+		sourceLineageTag: congestion_surcharge
+		summarizeBy: sum
+		sourceColumn: congestion_surcharge
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column cbd_congestion_fee
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: d18b12d8-5505-4b73-8014-25468afb5847
+		sourceLineageTag: cbd_congestion_fee
+		summarizeBy: sum
+		sourceColumn: cbd_congestion_fee
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column total_amount
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: c476babd-7e4d-489c-9bf4-ce88adea7325
+		sourceLineageTag: total_amount
+		summarizeBy: sum
+		sourceColumn: total_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition fact_trip = entity
+		mode: directLake
+		source
+			entityName: fact_trip
+			schemaName: dbo
+			expressionSource: 'DirectLake - wh_gold'
+

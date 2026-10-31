@@ -1,0 +1,25 @@
+relationship f6fc8f9f-eb89-1b93-8a7b-539d323d7b18
+	fromColumn: fact_trip.date_key
+	toColumn: dim_date.date_key
+
+relationship 13e52823-8143-4ea2-3e3c-870c7ac60139
+	fromColumn: fact_trip.pickup_zone_key
+	toColumn: dim_zone.zone_key
+
+relationship 43fc4dca-b64b-67f7-3e31-7f4cf44b6999
+	isActive: false
+	fromColumn: fact_trip.dropoff_zone_key
+	toColumn: dim_zone.zone_key
+
+relationship 2ee7adf0-f5fc-3254-dd83-9e390b333bf4
+	fromColumn: fact_trip.payment_type_key
+	toColumn: dim_payment_type.payment_type_key
+
+relationship 638c0a40-8f7a-8070-a4ac-6f1c0c3a0301
+	fromColumn: fact_trip.rate_code_key
+	toColumn: dim_rate_code.rate_code_key
+
+relationship db9b19e2-2a17-add7-b97a-65f9ac510a58
+	fromColumn: fact_trip.vendor_key
+	toColumn: dim_vendor.vendor_key
+

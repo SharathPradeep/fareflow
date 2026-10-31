@@ -1,0 +1,85 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "9bf947e107ae7bed901b",
+  "position": {
+    "x": 0,
+    "y": 581.3219616204691,
+    "z": 5,
+    "height": 499.4456289978678,
+    "width": 1011.1727078891258,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "barChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dq_quarantine_summary"
+                    }
+                  },
+                  "Property": "dq_reason"
+                }
+              },
+              "queryRef": "dq_quarantine_summary.dq_reason",
+              "nativeQueryRef": "dq_reason",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dq_quarantine_summary"
+                        }
+                      },
+                      "Property": "rows_quarantined"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(dq_quarantine_summary.rows_quarantined)",
+              "nativeQueryRef": "Sum of rows_quarantined"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "dq_quarantine_summary"
+                      }
+                    },
+                    "Property": "rows_quarantined"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

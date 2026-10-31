@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "67b29b90110c801c2a32",
+  "position": {
+    "x": 8.1876332622601282,
+    "y": 0,
+    "z": 0,
+    "height": 278.37953091684437,
+    "width": 327.50533049040513,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "Recon Status"
+                }
+              },
+              "queryRef": "recon_monthly.Recon Status",
+              "nativeQueryRef": "Recon Status"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

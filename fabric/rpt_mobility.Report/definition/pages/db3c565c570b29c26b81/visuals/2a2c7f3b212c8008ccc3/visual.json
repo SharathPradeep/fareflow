@@ -1,0 +1,288 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "2a2c7f3b212c8008ccc3",
+  "position": {
+    "x": 0,
+    "y": 270.19189765458424,
+    "z": 4,
+    "height": 311.13006396588486,
+    "width": 1920,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "year_month"
+                }
+              },
+              "queryRef": "recon_monthly.year_month",
+              "nativeQueryRef": "year_month"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "transform_check"
+                }
+              },
+              "queryRef": "recon_monthly.transform_check",
+              "nativeQueryRef": "transform_check"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "Source Revenue"
+                }
+              },
+              "queryRef": "recon_monthly.Source Revenue",
+              "nativeQueryRef": "Source Revenue"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "recon_monthly"
+                        }
+                      },
+                      "Property": "silver_total"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(recon_monthly.silver_total)",
+              "nativeQueryRef": "Sum of silver_total"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "recon_monthly"
+                        }
+                      },
+                      "Property": "silver_rows"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(recon_monthly.silver_rows)",
+              "nativeQueryRef": "Sum of silver_rows"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "Report vs Source Diff"
+                }
+              },
+              "queryRef": "recon_monthly.Report vs Source Diff",
+              "nativeQueryRef": "Report vs Source Diff"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "Recon Status"
+                }
+              },
+              "queryRef": "recon_monthly.Recon Status",
+              "nativeQueryRef": "Recon Status"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "recon_monthly"
+                        }
+                      },
+                      "Property": "quarantine_rows"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(recon_monthly.quarantine_rows)",
+              "nativeQueryRef": "Sum of quarantine_rows"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "publish_check"
+                }
+              },
+              "queryRef": "recon_monthly.publish_check",
+              "nativeQueryRef": "publish_check"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "recon_monthly"
+                        }
+                      },
+                      "Property": "gold_total"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(recon_monthly.gold_total)",
+              "nativeQueryRef": "Sum of gold_total"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "load_check"
+                }
+              },
+              "queryRef": "recon_monthly.load_check",
+              "nativeQueryRef": "load_check"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "recon_monthly"
+                        }
+                      },
+                      "Property": "gold_rows"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(recon_monthly.gold_rows)",
+              "nativeQueryRef": "Sum of gold_rows"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "recon_monthly"
+                        }
+                      },
+                      "Property": "file_rows"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(recon_monthly.file_rows)",
+              "nativeQueryRef": "Sum of file_rows"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "recon_monthly"
+                        }
+                      },
+                      "Property": "duplicates_removed"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(recon_monthly.duplicates_removed)",
+              "nativeQueryRef": "Sum of duplicates_removed"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "checked_at"
+                }
+              },
+              "queryRef": "recon_monthly.checked_at",
+              "nativeQueryRef": "checked_at"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "recon_monthly"
+                        }
+                      },
+                      "Property": "bronze_rows"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(recon_monthly.bronze_rows)",
+              "nativeQueryRef": "Sum of bronze_rows"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

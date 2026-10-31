@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "2e79df906698b3909592",
+  "position": {
+    "x": 683.66737739872076,
+    "y": 0,
+    "z": 2,
+    "height": 278.37953091684437,
+    "width": 327.50533049040513,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "recon_monthly"
+                    }
+                  },
+                  "Property": "Source Revenue"
+                }
+              },
+              "queryRef": "recon_monthly.Source Revenue",
+              "nativeQueryRef": "Source Revenue"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "recon_monthly"
+                  }
+                },
+                "Property": "Source Revenue"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

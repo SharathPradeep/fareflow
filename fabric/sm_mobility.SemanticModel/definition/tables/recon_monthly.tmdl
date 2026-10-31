@@ -2,6 +2,38 @@ table recon_monthly
 	lineageTag: a96dbae7-50ee-4750-81d8-1559f3f985d5
 	sourceLineageTag: [dbo].[recon_monthly]
 
+	measure 'Source Revenue' = SUM(recon_monthly[silver_total])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: b374b6d4-0548-481b-8a0c-a00e15ec6584
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Report vs Source Diff' = [Revenue] - [Source Revenue]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 96021339-272f-4a81-90f8-3b23560cd273
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Recon Status' =
+			
+			IF (
+			    COUNTROWS ( FILTER ( recon_monthly,
+			        recon_monthly[load_check] <> "PASS" || recon_monthly[transform_check] <> "PASS" || recon_monthly[publish_check] <> "PASS" ) ) = 0,
+			    "All months reconcile",
+			    "Check failed"
+			)
+		lineageTag: 020f51a1-fc02-49be-a5c5-1542b2a0021c
+
+		changedProperty = Name
+
 	column year_month
 		dataType: string
 		lineageTag: 303f3464-9e6b-45e5-b6d6-25ec77d591aa

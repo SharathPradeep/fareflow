@@ -1,0 +1,206 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "b43747d12c8495059a50",
+  "position": {
+    "x": 1194.5187601957587,
+    "y": 581.40293637846662,
+    "z": 7,
+    "height": 498.59706362153349,
+    "width": 725.87275693311585,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dq_gx_results"
+                    }
+                  },
+                  "Property": "checked_at"
+                }
+              },
+              "queryRef": "dq_gx_results.checked_at",
+              "nativeQueryRef": "checked_at"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dq_gx_results"
+                    }
+                  },
+                  "Property": "expectation"
+                }
+              },
+              "queryRef": "dq_gx_results.expectation",
+              "nativeQueryRef": "expectation"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dq_gx_results"
+                    }
+                  },
+                  "Property": "column_name"
+                }
+              },
+              "queryRef": "dq_gx_results.column_name",
+              "nativeQueryRef": "column_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dq_gx_results"
+                    }
+                  },
+                  "Property": "success"
+                }
+              },
+              "queryRef": "dq_gx_results.success",
+              "nativeQueryRef": "success"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dq_gx_results"
+                        }
+                      },
+                      "Property": "unexpected_count"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(dq_gx_results.unexpected_count)",
+              "nativeQueryRef": "Sum of unexpected_count"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dq_gx_results"
+                    }
+                  },
+                  "Property": "injected_test"
+                }
+              },
+              "queryRef": "dq_gx_results.injected_test",
+              "nativeQueryRef": "injected_test"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ce04d6a150d0b8612053",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dq_gx_results"
+              }
+            },
+            "Property": "checked_at"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "eef2d16e796bb03a9c1e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dq_gx_results"
+              }
+            },
+            "Property": "expectation"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "8b2a4ce697d0b10ad872",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dq_gx_results"
+              }
+            },
+            "Property": "column_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "eb753d802b5d0e61d0b4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dq_gx_results"
+              }
+            },
+            "Property": "success"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "83507f16cce6a9db152c",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dq_gx_results"
+                  }
+                },
+                "Property": "unexpected_count"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1085d40b245913eab238",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dq_gx_results"
+              }
+            },
+            "Property": "injected_test"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

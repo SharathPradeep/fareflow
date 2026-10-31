@@ -1,0 +1,88 @@
+table dq_gx_results
+	lineageTag: 55a9b25c-87d4-440c-86c3-a5554a0b5242
+	sourceLineageTag: [dbo].[dq_gx_results]
+
+	column run_id
+		dataType: string
+		lineageTag: fa8c893f-e1e6-4191-ab7f-a22f579f652f
+		sourceLineageTag: run_id
+		summarizeBy: none
+		sourceColumn: run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column expectation
+		dataType: string
+		lineageTag: 7235163f-bdc0-48f4-a7d9-b0df3dd26e11
+		sourceLineageTag: expectation
+		summarizeBy: none
+		sourceColumn: expectation
+
+		annotation SummarizationSetBy = Automatic
+
+	column column_name
+		dataType: string
+		lineageTag: 86fd5e2a-3a90-4b8d-bc19-a1bc34435693
+		sourceLineageTag: column_name
+		summarizeBy: none
+		sourceColumn: column_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column success
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7060e183-56cc-4145-bd30-29f52795accb
+		sourceLineageTag: success
+		summarizeBy: none
+		sourceColumn: success
+
+		annotation SummarizationSetBy = Automatic
+
+	column unexpected_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 1f102792-9589-4122-9bd9-45ded965037c
+		sourceLineageTag: unexpected_count
+		summarizeBy: sum
+		sourceColumn: unexpected_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column element_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f53050f-d40c-4421-887a-775b803915f9
+		sourceLineageTag: element_count
+		summarizeBy: sum
+		sourceColumn: element_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column injected_test
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 836f17a1-bc31-4b23-a874-c56d6ccbf0f7
+		sourceLineageTag: injected_test
+		summarizeBy: none
+		sourceColumn: injected_test
+
+		annotation SummarizationSetBy = Automatic
+
+	column checked_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f9702cab-278b-45d5-b41e-1095e82b2381
+		sourceLineageTag: checked_at
+		summarizeBy: none
+		sourceColumn: checked_at
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dq_gx_results = entity
+		mode: directLake
+		source
+			entityName: dq_gx_results
+			schemaName: dbo
+			expressionSource: 'DirectLake - wh_gold'
+

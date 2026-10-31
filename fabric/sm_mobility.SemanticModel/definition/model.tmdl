@@ -20,6 +20,7 @@ ref table dim_zone
 ref table dq_quarantine_summary
 ref table fact_trip
 ref table recon_monthly
+ref table dq_gx_results
 
 ref role 'Manhattan Analyst'
 
